@@ -1,2 +1,3 @@
-# qube-backup
-A simple way to back up your Qube Money budgets
+# baQup Tools
+
+Store your Qube Money account information, budget balances, etc.

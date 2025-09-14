@@ -1,0 +1,98 @@
+:root {
+  --base: #fff;
+  --inverted: #222;
+  --interactive: #5ee9ae;
+  --interactive--darker: #19b373;
+  --danger: #f00;
+  --shadow: rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--base);
+}
+
+body {
+  font-size: clamp(5mm, 3vmin, 8mm);
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 4vmin;
+}
+
+a:not(.bookmarklet) {
+  color: var(--interactive--darker);
+  font-weight: 600;
+}
+
+a:not(.bookmarklet):hover {
+  background-color: var(--interactive);
+  box-shadow: 0.1em 0 0 var(--interactive), -0.1em 0 0 var(--interactive);
+  color: var(--inverted);
+  text-decoration: none;
+}
+
+.hero img {
+  width: clamp(100px, 100vw, 300px);
+}
+
+@keyframes outline-crawl {
+  from {
+    outline-offset: 0;
+  }
+  to {
+    outline-offset: 10px;
+  }
+}
+
+.bookmarklet {
+  position: relative;
+  background-color: var(--inverted);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 0.2em;
+  text-decoration: none;
+  font-size: 3rem;
+  display: inline-block;
+  margin: 0 auto;
+  border: dashed 4px var(--interactive);
+  animation: outline-crawl 2s linear infinite;
+}
+.bookmarklet:after {
+  content: "Drag me to your bookmarks toolbar!";
+  display: inline-block;
+  position: absolute;
+  top: -1em;
+  right: 0.5em;
+  padding: 0.1em 0.5em;
+  border-radius: 0.2em;
+  font-size: 1rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--inverted);
+  background-color: var(--interactive);
+}
+
+.dropzone {
+  display: flex;
+  background-color: var(--interactive);
+  border: dashed 2px var(--inverted);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+
+.letter {
+  max-width: 100%;
+  border: solid 2px var(--inverted);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px 0;
+  box-shadow: 5px 5px 1px var(--shadow);
+  transform: rotate(1deg);
+}
+
+.fine-print {
+  font-size: 0.75rem;
+}
