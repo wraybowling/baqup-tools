@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BaQup Tools</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:title" content="Your Title Here" />
+    <meta property="og:description" content="Your Description" />
+    <meta property="og:image" content="https://your-domain.com/og-image.png" />
+    <meta property="og:url" content="https://your-domain.com/page" />
+
+    <meta property="og:image" content="baqup-tools-og.png" />
+    <meta
+      name="description"
+      content="A collection of offline tools for Qube Money users."
+    />
+    <meta name="author" content="Wray Bowling" />
+    <meta name="theme-color" content="#19b373" />
+
+    <script>
+      function preventClick(e) {
+        e.preventDefault();
+        alert(
+          "Whoops! This button is not meant to be clicked. Drag it to your bookmark toolbar instead. Navigate to Qube and then click the bookmark."
+        );
+      }
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="hero">
+      <img src="baqup-tools-logo-optimized.svg" alt="baqup tools logo" />
+    </div>
+
+    <h2>It's your money. It's your data.<br />Back it up!</h2>
+
+    <a
+      class="bookmarklet"
+      href="javascript: (function () {
+  const accountInfo = JSON.parse(localStorage.getItem('vuex'));
+
+  var request = new XMLHttpRequest();
+  request.open(
+    'GET',
+    `https://api.qubemoney.com/api/qubes/?account_id=${accountInfo.authentication.account.id}&limit=9999`,
+    true
+  );
+  request.onload = function () {
+    var response = JSON.parse(request.responseText);
+    var jsonLink = document.createElement('a');
+    jsonLink.setAttribute(
+      'href',
+      'data:application/json;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(response))
+    );
+    var timestamp = new Date().toISOString().replace(/[:\-\.]/g, '');
+    jsonLink.setAttribute('download', `qube-backup-${timestamp}.json`);
+    jsonLink.setAttribute('target', '_blank');
+    jsonLink.style.display = 'none';
+    document.body.appendChild(jsonLink);
+
+    jsonLink.click();
+  };
+  request.send();
+})();
+"
+      >💾 BaQup My Qubes</a
+    >
+
+    <ol>
+      <li>To get started, drag the big button to your bookmarks toolbar.</li>
+      <li>
+        Log In to the
+        <a href="https://dashboard.qubemoney.com/dashboard" target="qubemoney"
+          >Qube Money Dashboard</a
+        >
+        normally.
+      </li>
+      <li>
+        Click the "Qube Backup" bookmark once you're there to store a snapshot
+        of all your qubes.
+      </li>
+    </ol>
+    <script>
+      document
+        .querySelector(".bookmarklet")
+        .addEventListener("click", preventClick);
+    </script>
+
+    <h2>Visualize Your Backup</h2>
+
+    <p>
+      When you're done backing up, you can use the snapshot to start migrating
+      to another bank without losing your place.
+    </p>
+
+    <a href="visualize.html">Continue to the Snapshot Visualizer</a>
+
+    <h2>Wait. Why Do I need This?</h2>
+
+    In short, Qube Money is pausing operations temporarily and instructing
+    customers to move all of their funds out. You have the option to move your
+    money out and keep paying for "Qube+" as a budgeting tool only or pause
+    while your "settings will be saved," but both exit strategies present a
+    problem: Moving money out tampers with your budget/goal progress tracking.
+    If you are lucky enough to have not yet transferred your money out, this
+    tool can create a snapshot that you can use as a reference to build out your
+    goals and bills somewhere else. We don't know when Qube will come back, and
+    they did not provide a backup tool, so I built one.
+
+    <h2>The Letter</h2>
+
+    <img src="qube-letter.jpg" class="letter" />
+
+    <h2>Disclaimers</h2>
+
+    <p>
+      tldr; baQup Tools is an open source project independent of Qube Money. It
+      was developed to be as clean and hands-off-your-data as possible, but it's
+      also use-at-your-own-risk. I designed this tool for me, and wanted to
+      share it with others. There are no ads, no trackers, and nothing that
+      transfers your data to anyone else. My proof is in the code itself. Just
+      in case, here's some fine print though..
+    </p>
+
+    <div class="fine-print">
+      <p>
+        <strong>Risk & consent:</strong> By using baQup Tools you acknowledge
+        and accept full responsibility for how you use it. The software is
+        provided “as is” without warranty of any kind. You assume all risk for
+        data loss, account suspension, or legal consequences arising from your
+        use.
+      </p>
+
+      <p>
+        The creator of this tool is not liable for any financial loss, damages,
+        or consequences that may result from its use.
+      </p>
+
+      <p>By using this tool, you agree that it is at your own risk.</p>
+
+      <p>
+        <strong>What this is:</strong> an open-source web project provided free
+        of charge. There are no ads, no telemetry, and no affiliation with Qube
+        Money or any financial institution. I do not seek to collect, store, or
+        monetize your data.
+      </p>
+
+      <p>
+        <strong>What this is not:</strong> a guarantee of completeness, legal
+        advice, or a means to access accounts you are not authorized to access.
+        Use this tool only for accounts and data you own or have explicit
+        permission to back up.
+      </p>
+
+      <p>
+        <strong>Authorized use only:</strong> You represent and warrant that you
+        own, or have explicit authorization to access, any account or data you
+        retrieve with this tool. Do not use this software to access accounts or
+        data you do not own or for which you lack permission.
+      </p>
+
+      <p>
+        <strong>No collection by author:</strong> By default, baQup Tools does
+        not collect, store, or transmit your exported data to the project
+        maintainers. You are responsible for verifying how you run the software
+        and for any configuration that might copy data elsewhere (for example,
+        cloud sync, remote bug reports, or third-party services).
+      </p>
+
+      <p>
+        <strong>No warranties:</strong> This software is provided
+        <em>as is</em>, without warranty of any kind, express or implied,
+        including but not limited to merchantability, fitness for a particular
+        purpose, noninfringement, or accuracy. Use at your own risk.
+      </p>
+
+      <p>
+        <strong>Limitation of liability:</strong> To the fullest extent
+        permitted by applicable law, the author, contributors, and maintainers
+        shall not be liable for any direct, indirect, incidental, special,
+        consequential, or punitive damages, including lost profits, loss of
+        data, loss of business, or legal fees, arising out of or in connection
+        with your use of this software.
+      </p>
+
+      <p>
+        <strong>Indemnity:</strong> You agree to indemnify, defend, and hold
+        harmless the author, contributors, and maintainers from any claims,
+        liabilities, damages, losses, or expenses (including reasonable
+        attorneys’ fees) arising from your use of the software, your breach of
+        these terms, or your violation of any applicable law or third-party
+        rights.
+      </p>
+
+      <p>
+        <strong>Compliance:</strong> You are responsible for ensuring your use
+        of baQup Tools complies with applicable laws and any third-party terms
+        of service. If a service’s terms or local law prohibit automated
+        retrieval of data, do not use this tool for that purpose.
+      </p>
+
+      <p>
+        <strong>License & contact:</strong> This project is open source.
+        <em>(Insert chosen license, e.g., MIT)</em>. For legal questions,
+        takedown notices, or contact: <em>(insert contact email)</em>.
+      </p>
+
+      <p>
+        <em>Not legal advice:</em> This text is a draft and does not constitute
+        legal counsel. If you need binding protection, consult an attorney.
+      </p>
+    </div>
+    <p>
+      <strong>Security guidance:</strong> Backups of financial data are
+      sensitive. Encrypt exported files, store backups offline or in a secure
+      vault, use strong passphrases, and follow best practices for credential
+      management. The author is not responsible for insecure storage or loss of
+      exported data.
+    </p>
+
+    <h2>About Me</h2>
+    <p>
+      <a href="https://github.com/wraybowling">Wray Bowling</a> is a freelance
+      web developer living in South Carolina.
+    </p>
+
+    <p>
+      If you found this tool useful,
+      <a
+        href="https://github.com/sponsors/wraybowling/signup"
+        target="_blank"
+        rel="noopener"
+        >donations are appreciated</a
+      >.
+    </p>
+  </body>
+</html>
