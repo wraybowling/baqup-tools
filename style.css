@@ -34,7 +34,14 @@ a:not(.bookmarklet):hover {
   text-decoration: none;
 }
 
-.hero img {
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+header img {
   width: clamp(100px, 100vw, 300px);
 }
 
