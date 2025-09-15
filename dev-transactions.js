@@ -3,6 +3,15 @@
     alert('baQup Tools is already running. Please wait for it to finish.');
     return;
   }
+
+  const confirmSpendingQubes = window.confirm(
+    'This will download all your transactions as multiple files. Stay on the page until you see the completion message. Ready?'
+  );
+
+  if (!confirmSpendingQubes) {
+    return;
+  }
+
   sessionStorage.setItem('baqupRunning', true);
 
   function downloadJson(jsonString, label) {
@@ -31,8 +40,6 @@
     alert('You must be viewing Qube and logged in to download your data.');
     return;
   }
-
-  downloadJson(localStorage.getItem('vuex'), 'account');
 
   function downloadTransactions(url, fileNum = 0) {
     let xhr = new XMLHttpRequest();

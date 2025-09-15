@@ -1,0 +1,22 @@
+table {
+  overflow-x: scroll;
+  font-size: 0.9rem;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: var(--base);
+  border-bottom: solid 1px var(--inverted);
+}
+
+th,
+td {
+  text-align: end;
+  padding: 0.1em 0.5em;
+  font-family: monospace;
+}
+
+tr:nth-child(even) {
+  background-color: var(--zebra);
+}

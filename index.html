@@ -66,11 +66,16 @@
     <a
       class="bookmarklet"
       href="javascript: (function () {
-  if (sessionStorage.getItem('baqupRunning')) {
-    alert('baQup Tools is already running. Please wait for it to finish.');
+  const confirmSpendingQubes = window.confirm(
+    'Click on every Spending Qube once before continuing. Ready?'
+  );
+
+  if (!confirmSpendingQubes) {
+    alert(
+      'Please go back and click on every spending qube before downloading your data.'
+    );
     return;
   }
-  sessionStorage.setItem('baqupRunning', true);
 
   function downloadJson(jsonString, label) {
     var anchor = document.createElement('a');
@@ -100,6 +105,56 @@
   }
 
   downloadJson(localStorage.getItem('vuex'), 'account');
+})();
+
+"
+      >💾 BaQup Qubes</a
+    >
+
+    <a
+      class="bookmarklet"
+      href="javascript: (function () {
+  if (sessionStorage.getItem('baqupRunning')) {
+    alert('baQup Tools is already running. Please wait for it to finish.');
+    return;
+  }
+
+  const confirmSpendingQubes = window.confirm(
+    'This will download all your transactions as multiple files. Stay on the page until you see the completion message. Ready?'
+  );
+
+  if (!confirmSpendingQubes) {
+    return;
+  }
+
+  sessionStorage.setItem('baqupRunning', true);
+
+  function downloadJson(jsonString, label) {
+    var anchor = document.createElement('a');
+    anchor.setAttribute(
+      'href',
+      'data:application/json;charset=utf-8,' + encodeURIComponent(jsonString)
+    );
+    var timestamp = new Date().toISOString().slice(0, 10);
+    anchor.setAttribute('download', `baqup-${label} ${timestamp}.json`);
+    anchor.setAttribute('target', '_blank');
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
+
+    anchor.click();
+  }
+
+  const cache = JSON.parse(localStorage.getItem('vuex'));
+
+  const currentURL = new URL(window.location.href);
+  if (
+    !cache ||
+    currentURL.protocol !== 'https:' ||
+    currentURL.hostname !== 'dashboard.qubemoney.com'
+  ) {
+    alert('You must be viewing Qube and logged in to download your data.');
+    return;
+  }
 
   function downloadTransactions(url, fileNum = 0) {
     let xhr = new XMLHttpRequest();
@@ -139,7 +194,7 @@
   );
 })();
 "
-      >💾 BaQup My Qubes</a
+      >💾 BaQup Transactions</a
     >
 
     <ol>

@@ -1,5 +1,6 @@
 :root {
   --base: #fff;
+  --zebra: #dfdfdf;
   --inverted: #222;
   --interactive: #5ee9ae;
   --interactive--darker: #19b373;
@@ -58,9 +59,10 @@ a:not(.bookmarklet):hover {
   margin: 0 auto;
   border: dashed 4px var(--interactive);
   animation: outline-crawl 2s linear infinite;
+  margin: 0.3em 0;
 }
 .bookmarklet:after {
-  content: "Drag me to your bookmarks toolbar!";
+  content: 'Drag me to your bookmarks toolbar!';
   display: inline-block;
   position: absolute;
   top: -1em;
@@ -95,4 +97,8 @@ a:not(.bookmarklet):hover {
 
 .fine-print {
   font-size: 0.75rem;
+}
+
+.bigbreak {
+  height: 50vh;
 }
