@@ -109,3 +109,10 @@ header img {
 .bigbreak {
   height: 50vh;
 }
+
+@media screen and (max-width: 780px) {
+  header,
+  .dropzone {
+    flex-direction: column;
+  }
+}
