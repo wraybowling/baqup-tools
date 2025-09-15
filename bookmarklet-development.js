@@ -1,4 +1,10 @@
 (function () {
+  if (sessionStorage.getItem('baqupRunning')) {
+    alert('baQup Tools is already running. Please wait for it to finish.');
+    return;
+  }
+  sessionStorage.setItem('baqupRunning', true);
+
   function downloadJson(jsonString, label) {
     var anchor = document.createElement('a');
     anchor.setAttribute(
@@ -48,8 +54,12 @@
           `transactions-${fileNum}`
         );
 
-        if (!response.next) return;
-        downloadTransactions(response.next, fileNum + 20);
+        if (!response.next) {
+          sessionStorage.removeItem('baqupRunning');
+          alert('All transactions downloaded!');
+        } else {
+          downloadTransactions(response.next, fileNum + 20);
+        }
       }
     });
 
