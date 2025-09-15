@@ -50,7 +50,7 @@
       function preventClick(e) {
         e.preventDefault();
         alert(
-          "Whoops! This button is not meant to be clicked. Drag it to your bookmark toolbar instead. Navigate to Qube and then click the bookmark."
+          'Whoops! This button is not meant to be clicked. Drag it to your bookmark toolbar instead. Navigate to Qube and then click the bookmark.'
         );
       }
     </script>
@@ -66,31 +66,67 @@
     <a
       class="bookmarklet"
       href="javascript: (function () {
-  const accountInfo = JSON.parse(localStorage.getItem('vuex'));
-
-  var request = new XMLHttpRequest();
-  request.open(
-    'GET',
-    `https://api.qubemoney.com/api/qubes/?account_id=${accountInfo.authentication.account.id}&limit=9999`,
-    true
-  );
-  request.onload = function () {
-    var response = JSON.parse(request.responseText);
-    var jsonLink = document.createElement('a');
-    jsonLink.setAttribute(
+  function downloadJson(jsonString, label) {
+    var anchor = document.createElement('a');
+    anchor.setAttribute(
       'href',
-      'data:application/json;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(response))
+      'data:application/json;charset=utf-8,' + encodeURIComponent(jsonString)
     );
-    var timestamp = new Date().toISOString().replace(/[:\-\.]/g, '');
-    jsonLink.setAttribute('download', `qube-backup-${timestamp}.json`);
-    jsonLink.setAttribute('target', '_blank');
-    jsonLink.style.display = 'none';
-    document.body.appendChild(jsonLink);
+    var timestamp = new Date().toISOString().slice(0, 10);
+    anchor.setAttribute('download', `baqup-${label} ${timestamp}.json`);
+    anchor.setAttribute('target', '_blank');
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
 
-    jsonLink.click();
-  };
-  request.send();
+    anchor.click();
+  }
+
+  const cache = JSON.parse(localStorage.getItem('vuex'));
+
+  const currentURL = new URL(window.location.href);
+  if (
+    !cache ||
+    currentURL.protocol !== 'https:' ||
+    currentURL.hostname !== 'dashboard.qubemoney.com'
+  ) {
+    alert('You must be viewing Qube and logged in to download your data.');
+    return;
+  }
+
+  downloadJson(localStorage.getItem('vuex'), 'account');
+
+  function downloadTransactions(url, fileNum = 0) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader(
+      'Authorization',
+      `Token ${cache.authentication.token}`
+    );
+    xhr.addEventListener('loadend', (event) => {
+      if (
+        event.currentTarget.status == 200 &&
+        event.currentTarget.responseText
+      ) {
+        const response = JSON.parse(event.currentTarget.responseText);
+
+        if (!response.results || !response.results.length) return;
+        downloadJson(
+          JSON.stringify(response.results),
+          `transactions-${fileNum}`
+        );
+
+        if (!response.next) return;
+        downloadTransactions(response.next, fileNum + 20);
+      }
+    });
+
+    xhr.send();
+  }
+
+  downloadTransactions(
+    `https://api.qubemoney.com/api/search/transactions/?account_id=${cache.authentication.account.id}&filter_date_range=all&filter_transaction_type=all&limit=20&offset=0`,
+    0
+  );
 })();
 "
       >💾 BaQup My Qubes</a
@@ -112,8 +148,8 @@
     </ol>
     <script>
       document
-        .querySelector(".bookmarklet")
-        .addEventListener("click", preventClick);
+        .querySelector('.bookmarklet')
+        .addEventListener('click', preventClick);
     </script>
 
     <h2>Visualize Your Backup</h2>
