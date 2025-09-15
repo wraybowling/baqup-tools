@@ -1,6 +1,25 @@
-document.querySelector('.dropzone').addEventListener('drop', (e) => {
-  e.preventDefault();
-  let file = e.dataTransfer.files[0];
+const downloadButton = document.querySelector('.download');
+
+function downloadCSV() {
+  const qubesTable = document.querySelector('#qubes');
+  const rows = Array.from(qubesTable.querySelectorAll('tr')).map((row) =>
+    Array.from(row.querySelectorAll('th,td')).map((cell) => cell.textContent)
+  );
+  const filename = 'baqup-qubes.csv';
+  const csvContent = rows
+    .map((row) => row.map((cell) => `"${cell}"`).join(','))
+    .join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.setAttribute('download', filename);
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+function handleFile(file) {
   let reader = new FileReader();
   reader.onload = (event) => {
     let jsonData = JSON.parse(event.target.result);
@@ -9,18 +28,19 @@ document.querySelector('.dropzone').addEventListener('drop', (e) => {
     addQubesToTable(qubesTable, jsonData);
   };
   reader.readAsText(file);
+}
+
+document.querySelector('.dropzone').addEventListener('drop', (e) => {
+  e.preventDefault();
+  let file = e.dataTransfer.files[0];
+  handleFile(file);
+  downloadButton.classList.remove('hidden');
 });
 
 document.querySelector('input[type=file]').addEventListener('change', (e) => {
   let file = e.target.files[0];
-  let reader = new FileReader();
-  reader.onload = (event) => {
-    let jsonData = JSON.parse(event.target.result);
-    console.log(jsonData);
-    const qubesTable = document.querySelector('#qubes > tbody');
-    addQubesToTable(qubesTable, jsonData);
-  };
-  reader.readAsText(file);
+  handleFile(file);
+  downloadButton.classList.remove('hidden');
 });
 
 function addQubesToTable(qubesTable, jsonData) {

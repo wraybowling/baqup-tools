@@ -65,23 +65,24 @@
       <input type="file" id="fileInput" />
       <label for="fileInput"> Drag and drop your account file here. </label>
     </div>
+    <button class="download hidden" onClick="downloadCSV()">
+      Download as CSV
+    </button>
 
-    <div class="sidescroll">
-      <table id="qubes">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>12 Month</th>
-            <th>6 Month</th>
-            <th>3 Month</th>
-            <th>Budget</th>
-            <th>Bill/Goal</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <table id="qubes">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>12 Month</th>
+          <th>6 Month</th>
+          <th>3 Month</th>
+          <th>Budget</th>
+          <th>Bill/Goal</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
     <div class="bigbreak"></div>
 

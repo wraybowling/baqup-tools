@@ -116,3 +116,7 @@ header img {
     flex-direction: column;
   }
 }
+
+.hidden {
+  display: none;
+}
