@@ -162,6 +162,20 @@
         .addEventListener('click', preventClick);
     </script>
 
+    <h2>What Does It Do?</h2>
+    <p>
+      You should get multiple files in your Downloads folder. The first is your
+      account and budget information data. The rest of the files are your
+      transaction details in batches of 20.
+    </p>
+    <ul>
+      <li>baqup-account (timestamp).json</li>
+      <li>baqup-transactions-0 (timestamp).json</li>
+      <li>baqup-transactions-20 (timestamp).json</li>
+      <li>baqup-transactions-40 (timestamp).json</li>
+      <li>...</li>
+    </ul>
+
     <h2>Visualize Your Backup</h2>
 
     <p>
@@ -169,7 +183,16 @@
       to another bank without losing your place.
     </p>
 
-    <a href="visualize.html">Continue to the Snapshot Visualizer</a>
+    <p>
+      The files use the JSON format and can be opened in any text editor. You
+      should store them somewhere encrypted for safety.
+    </p>
+
+    <p>
+      By themselves, you may have trouble sifting through the large files. A
+      visualizer is in the works.
+    </p>
+    <a href="visualizer.html">Continue to the Snapshot Visualizer</a>
 
     <h2>Wait. Why Do I need This?</h2>
 
@@ -267,7 +290,7 @@
         <strong>Indemnity:</strong> You agree to indemnify, defend, and hold
         harmless the author, contributors, and maintainers from any claims,
         liabilities, damages, losses, or expenses (including reasonable
-        attorneys’ fees) arising from your use of the software, your breach of
+        attorneys' fees) arising from your use of the software, your breach of
         these terms, or your violation of any applicable law or third-party
         rights.
       </p>
@@ -275,7 +298,7 @@
       <p>
         <strong>Compliance:</strong> You are responsible for ensuring your use
         of baQup Tools complies with applicable laws and any third-party terms
-        of service. If a service’s terms or local law prohibit automated
+        of service. If a service's terms or local law prohibit automated
         retrieval of data, do not use this tool for that purpose.
       </p>
 
